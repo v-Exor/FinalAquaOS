@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AquaOS — Sign In</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="login-body">
+
+  <!-- Animated background -->
+  <div class="login-bg">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+    <div class="bg-orb orb3"></div>
+    <canvas id="particles-canvas"></canvas>
+  </div>
+
+  <!-- Lock screen clock -->
+  <div class="lock-clock" id="lockClock">
+    <div class="lock-time" id="lockTime">12:00</div>
+    <div class="lock-date" id="lockDate">Monday, January 1</div>
+  </div>
+
+  <!-- Login card -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-card">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <div class="avatar-glow"></div>
+      </div>
+
+      <div class="login-username">User</div>
+      <div class="login-subtitle">AquaOS</div>
+
+      <div class="login-form">
+        <div class="input-group">
+          <input
+            type="password"
+            id="passwordInput"
+            class="login-input"
+            placeholder="Password"
+            autocomplete="off"
+          />
+          <button class="login-arrow" id="loginBtn" onclick="attemptLogin()">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+        <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+        <div class="login-hint">Hint: leave it blank or type anything</div>
+      </div>
+
+      <div class="login-options">
+        <button class="login-opt-btn"><i class="fa-solid fa-wifi"></i></button>
+        <button class="login-opt-btn"><i class="fa-solid fa-accessibility"></i></button>
+        <button class="login-opt-btn" onclick="showShutdown()"><i class="fa-solid fa-power-off"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shutdown overlay -->
+  <div class="shutdown-overlay" id="shutdownOverlay">
+    <div class="shutdown-menu">
+      <button class="sd-btn" onclick="triggerShutdown('sleep')"><i class="fa-solid fa-moon"></i> Sleep</button>
+      <button class="sd-btn" onclick="triggerShutdown('shutdown')"><i class="fa-solid fa-power-off"></i> Shut down</button>
+      <button class="sd-btn" onclick="triggerShutdown('restart')"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+      <button class="sd-btn cancel" onclick="hideShutdown()"><i class="fa-solid fa-xmark"></i> Cancel</button>
+    </div>
+  </div>
+
+  <!-- Transition overlay -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AquaOS — Desktop</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="desktop-body">
+
+  <!-- Desktop wallpaper & orbs -->
+  <div class="desktop-bg">
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+    <div class="bg-orb orb3"></div>
+  </div>
+
+  <!-- Desktop icons -->
+  <div class="desktop-icons" id="desktopIcons">
+    <div class="desktop-icon" ondblclick="openApp('fileExplorer')" oncontextmenu="showContextMenu(event,'desktop-icon','fileExplorer')">
+      <div class="icon-img"><i class="fa-solid fa-folder-open"></i></div>
+      <span>File Explorer</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('browser')" oncontextmenu="showContextMenu(event,'desktop-icon','browser')">
+      <div class="icon-img" style="color:#4fc3f7"><i class="fa-solid fa-globe"></i></div>
+      <span>Browser</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('notepad')" oncontextmenu="showContextMenu(event,'desktop-icon','notepad')">
+      <div class="icon-img" style="color:#fff59d"><i class="fa-solid fa-note-sticky"></i></div>
+      <span>Notepad</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('calculator')" oncontextmenu="showContextMenu(event,'desktop-icon','calculator')">
+      <div class="icon-img" style="color:#a5d6a7"><i class="fa-solid fa-calculator"></i></div>
+      <span>Calculator</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('settings')" oncontextmenu="showContextMenu(event,'desktop-icon','settings')">
+      <div class="icon-img" style="color:#b0bec5"><i class="fa-solid fa-gear"></i></div>
+      <span>Settings</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('terminal')" oncontextmenu="showContextMenu(event,'desktop-icon','terminal')">
+      <div class="icon-img" style="color:#80cbc4"><i class="fa-solid fa-terminal"></i></div>
+      <span>Terminal</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('taskManager')" oncontextmenu="showContextMenu(event,'desktop-icon','taskManager')">
+      <div class="icon-img" style="color:#ef9a9a"><i class="fa-solid fa-chart-bar"></i></div>
+      <span>Task Manager</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('paint')" oncontextmenu="showContextMenu(event,'desktop-icon','paint')">
+      <div class="icon-img" style="color:#ce93d8"><i class="fa-solid fa-paintbrush"></i></div>
+      <span>Paint</span>
+    </div>
+    <div class="desktop-icon" ondblclick="openApp('recycleBin')" oncontextmenu="showContextMenu(event,'desktop-icon','recycleBin')">
+      <div class="icon-img" style="color:#ef9a9a"><i class="fa-solid fa-trash-can"></i></div>
+      <span>Recycle Bin</span>
+    </div>
+  </div>
+
+  <!-- Windows container -->
+  <div id="windowsContainer"></div>
+
+  <!-- Taskbar -->
+  <div class="taskbar" id="taskbar">
+    <!-- Start button -->
+    <button class="taskbar-start" id="startBtn" onclick="toggleStartMenu()">
+      <i class="fa-brands fa-windows"></i>
+    </button>
+
+    <!-- Search -->
+    <div class="taskbar-search" onclick="openSearch()">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span>Search</span>
+    </div>
+
+    <!-- Task View -->
+    <button class="taskbar-icon-btn" onclick="toggleTaskView()" title="Task View">
+      <i class="fa-solid fa-table-cells-large"></i>
+    </button>
+
+    <!-- Pinned apps -->
+    <div class="taskbar-apps" id="taskbarApps">
+      <button class="taskbar-app-btn" onclick="openApp('fileExplorer')" title="File Explorer">
+        <i class="fa-solid fa-folder-open"></i>
+      </button>
+      <button class="taskbar-app-btn" onclick="openApp('browser')" title="Browser">
+        <i class="fa-solid fa-globe"></i>
+      </button>
+      <button class="taskbar-app-btn" onclick="openApp('notepad')" title="Notepad">
+        <i class="fa-solid fa-note-sticky"></i>
+      </button>
+      <button class="taskbar-app-btn" onclick="openApp('calculator')" title="Calculator">
+        <i class="fa-solid fa-calculator"></i>
+      </button>
+    </div>
+
+    <!-- Open windows in taskbar -->
+    <div class="taskbar-open-apps" id="taskbarOpenApps"></div>
+
+    <!-- System tray -->
+    <div class="system-tray">
+      <button class="tray-btn" onclick="toggleWifi()" id="wifiBtn" title="Network">
+        <i class="fa-solid fa-wifi"></i>
+      </button>
+      <button class="tray-btn" onclick="toggleVolume()" title="Volume">
+        <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
+      </button>
+      <div class="tray-clock" id="trayClock">
+        <div id="trayTime">12:00 PM</div>
+        <div id="trayDate">1/1/2025</div>
+      </div>
+      <button class="tray-btn notif-btn" onclick="toggleNotifCenter()" title="Notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span class="notif-badge" id="notifBadge">3</span>
+      </button>
+      <button class="tray-btn" onclick="showDesktop()" title="Show Desktop">
+        <i class="fa-solid fa-display"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Start Menu -->
+  <div class="start-menu" id="startMenu">
+    <div class="start-header">
+      <input type="text" class="start-search" placeholder="Search apps, files, settings..." id="startSearchInput" oninput="filterStartApps(this.value)"/>
+    </div>
+    <div class="start-pinned">
+      <div class="start-section-title">Pinned</div>
+      <div class="start-apps-grid" id="startAppsGrid">
+        <div class="start-app" ondblclick="openApp('fileExplorer');toggleStartMenu()">
+          <div class="start-app-icon"><i class="fa-solid fa-folder-open"></i></div>
+          <span>Explorer</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('browser');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#4fc3f7"><i class="fa-solid fa-globe"></i></div>
+          <span>Browser</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('notepad');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#fff59d"><i class="fa-solid fa-note-sticky"></i></div>
+          <span>Notepad</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('calculator');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#a5d6a7"><i class="fa-solid fa-calculator"></i></div>
+          <span>Calculator</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('settings');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#b0bec5"><i class="fa-solid fa-gear"></i></div>
+          <span>Settings</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('terminal');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#80cbc4"><i class="fa-solid fa-terminal"></i></div>
+          <span>Terminal</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('taskManager');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#ef9a9a"><i class="fa-solid fa-chart-bar"></i></div>
+          <span>Task Mgr</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('paint');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#ce93d8"><i class="fa-solid fa-paintbrush"></i></div>
+          <span>Paint</span>
+        </div>
+        <div class="start-app" ondblclick="openApp('recycleBin');toggleStartMenu()">
+          <div class="start-app-icon" style="color:#ef9a9a"><i class="fa-solid fa-trash-can"></i></div>
+          <span>Recycle Bin</span>
+        </div>
+      </div>
+    </div>
+    <div class="start-recommended">
+      <div class="start-section-title">Recommended</div>
+      <div class="start-rec-list">
+        <div class="start-rec-item"><i class="fa-solid fa-clock"></i><span>Recent files appear here</span></div>
+      </div>
+    </div>
+    <div class="start-footer">
+      <div class="start-user"><i class="fa-solid fa-user-circle"></i> User</div>
+      <button class="start-power-btn" onclick="showPowerMenu()"><i class="fa-solid fa-power-off"></i></button>
+    </div>
+  </div>
+
+  <!-- Power menu from start -->
+  <div class="power-menu" id="powerMenu">
+    <button onclick="triggerAction('sleep')"><i class="fa-solid fa-moon"></i> Sleep</button>
+    <button onclick="triggerAction('shutdown')"><i class="fa-solid fa-power-off"></i> Shut down</button>
+    <button onclick="triggerAction('restart')"><i class="fa-solid fa-rotate-right"></i> Restart</button>
+    <button onclick="triggerAction('signout')"><i class="fa-solid fa-right-from-bracket"></i> Sign out</button>
+  </div>
+
+  <!-- Context Menu -->
+  <div class="context-menu" id="contextMenu"></div>
+
+  <!-- Search Overlay -->
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box-big">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="bigSearchInput" placeholder="Search apps, files, settings..." oninput="bigSearch(this.value)" autofocus/>
+      <button onclick="closeSearch()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- Task View -->
+  <div class="task-view" id="taskView">
+    <div class="task-view-header">Task View</div>
+    <div class="task-view-windows" id="taskViewWindows"></div>
+    <button class="task-view-close" onclick="toggleTaskView()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <!-- Notification Center -->
+  <div class="notif-center" id="notifCenter">
+    <div class="notif-header">
+      <span>Notifications</span>
+      <button onclick="clearNotifs()">Clear all</button>
+    </div>
+    <div class="notif-list" id="notifList">
+      <div class="notif-item">
+        <i class="fa-solid fa-circle-info notif-icon"></i>
+        <div class="notif-content"><strong>Welcome to AquaOS</strong><p>Your simulation is ready.</p></div>
+      </div>
+      <div class="notif-item">
+        <i class="fa-solid fa-shield-halved notif-icon"></i>
+        <div class="notif-content"><strong>System Protected</strong><p>Security is up to date.</p></div>
+      </div>
+      <div class="notif-item">
+        <i class="fa-solid fa-download notif-icon"></i>
+        <div class="notif-content"><strong>Update Available</strong><p>AquaOS v2.1 is ready to install.</p></div>
+      </div>
+    </div>
+    <div class="quick-settings">
+      <div class="qs-title">Quick Settings</div>
+      <div class="qs-grid">
+        <button class="qs-btn active" id="qsWifi" onclick="toggleQS('wifi')"><i class="fa-solid fa-wifi"></i><span>Wi-Fi</span></button>
+        <button class="qs-btn active" id="qsBt" onclick="toggleQS('bt')"><i class="fa-brands fa-bluetooth-b"></i><span>Bluetooth</span></button>
+        <button class="qs-btn" id="qsAirplane" onclick="toggleQS('airplane')"><i class="fa-solid fa-plane"></i><span>Airplane</span></button>
+        <button class="qs-btn active" id="qsDark" onclick="toggleQS('dark')"><i class="fa-solid fa-moon"></i><span>Dark Mode</span></button>
+        <button class="qs-btn" id="qsDnd" onclick="toggleQS('dnd')"><i class="fa-solid fa-bell-slash"></i><span>Do Not Disturb</span></button>
+        <button class="qs-btn" id="qsSnip" onclick="openApp('paint');toggleNotifCenter()"><i class="fa-solid fa-scissors"></i><span>Snip</span></button>
+      </div>
+      <div class="qs-sliders">
+        <div class="qs-slider-row"><i class="fa-solid fa-volume-high"></i><input type="range" id="volumeSlider" min="0" max="100" value="75" oninput="changeVolume(this.value)"/></div>
+        <div class="qs-slider-row"><i class="fa-solid fa-sun"></i><input type="range" id="brightnessSlider" min="20" max="100" value="100" oninput="changeBrightness(this.value)"/></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brightness overlay -->
+  <div class="brightness-overlay" id="brightnessOverlay"></div>
+
+  <!-- Toast notification -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Transition overlay for sign-out -->
+  <div class="transition-overlay" id="transitionOverlay"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
